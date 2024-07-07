@@ -1,7 +1,7 @@
-package com.kurtulussahin.java.ibtechtasks.task1.operation;
+package com.kurtulussahin.java.ibtechtasks.tasks.operation;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.dao.AddresDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.AddresDao;
 
 public class AddresOperation implements CrudOperations {
 

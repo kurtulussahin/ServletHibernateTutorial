@@ -1,51 +1,52 @@
-package com.kurtulussahin.java.ibtechtasks.task1.dao;
+package com.kurtulussahin.java.ibtechtasks.tasks.dao;
 
 import java.util.Iterator;
 import java.util.List;
-
-import javax.persistence.Column;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.kurtulussahin.java.ibtechtasks.task1.model.Addres;
-import com.kurtulussahin.java.ibtechtasks.task1.util.HibernateUtil;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Account;
+import com.kurtulussahin.java.ibtechtasks.tasks.util.HibernateUtil;
 
-public class AddresDao {
-	public void create(Addres addres) {
+public class AccountDao {
+	public Account create(Account account) {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			session.save(addres);
+			session.save(account);
 			transaction.commit();
+			System.out.println("-> Creation successful. Account Id: " + account.getId());
+			return account;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			e.printStackTrace();
+			return null;
 		}
 	}
 
-	public List<Addres> getAddresses() {
+	public List<Account> getAccounts() {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			return session.createQuery("from Addres", Addres.class).list();
+			return session.createQuery("from Account", Account.class).list();
 		}
 	}
 	
-	public void listAddresses() {
+	public void listAccounts() {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				List addresses = session.createQuery("FROM Addres").list();
-				for (Iterator iterator = addresses.iterator(); iterator.hasNext();) {
-					Addres addres = (Addres) iterator.next();
-					System.out.print("Id: " + addres.getId());
-					System.out.print(" Customer Id: " + addres.getCustomerId());
-					System.out.print(" City: " + addres.getCity());
-					System.out.println(" Country: " + addres.getCountry());
+				List customers = session.createQuery("FROM Account").list();
+				for (Iterator iterator = customers.iterator(); iterator.hasNext();) {
+					Account account = (Account) iterator.next();
+					System.out.print("Id: " + account.getId());
+					System.out.print(" Customer Id: " + account.getCustomerId());
+					System.out.print(" Account Name: " + account.getAccountName());
+					System.out.println(" Balance: " + account.getBalance());
 				}
 				transaction.commit();
 			} catch (HibernateException e) {
@@ -63,35 +64,37 @@ public class AddresDao {
 		}
 	}
 	   
-	public void update(long addresId, String country, String city, String postalCode) {
+	public Account update(long accountId, String accountName, long balance, int status) {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				Addres addres = (Addres) session.get(Addres.class, addresId);
-				addres.setCity(city);
-				addres.setCountry(country);
-				addres.setPostalCode(postalCode);
-				session.update(addres);
+				Account account = (Account) session.get(Account.class, accountId);
+				account.setAccountName(accountName);
+				account.setBalance(balance);
+				account.setStatus(status);
+				session.update(account);
 				transaction.commit();
+				return account;
 			} catch (HibernateException e) {
 				if (transaction != null)
 					transaction.rollback();
 				e.printStackTrace();
+				return null;
 			} finally {
 				session.close();
 			}
 		}
 	}
 	   
-	public void delete(long addresId) {
+	public void delete(long accountId) {
 
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				Addres addres = (Addres) session.get(Addres.class, addresId);
-				session.delete(addres);
+				Account account = (Account) session.get(Account.class, accountId);
+				session.delete(account);
 				transaction.commit();
 			} catch (HibernateException e) {
 				if (transaction != null)
@@ -113,7 +116,7 @@ public class AddresDao {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				String stringQuery = "DELETE FROM Address";
+				String stringQuery = "DELETE FROM Account";
 				Query query = session.createQuery(stringQuery);
 				query.executeUpdate();
 				transaction.commit();
@@ -130,6 +133,32 @@ public class AddresDao {
 				transaction.rollback();
 			}
 			e.printStackTrace();
+		}
+	}
+
+	public Account getAccount(long accountId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Account account = (Account) session.get(Account.class, accountId);
+			return account;
+		}
+	}
+
+	public void updateBalance(long accountId, double balance) {
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			try {
+				transaction = session.beginTransaction();
+				Account account = (Account) session.get(Account.class, accountId);
+				account.setBalance(balance);
+				session.update(account);
+				transaction.commit();
+			} catch (HibernateException e) {
+				if (transaction != null)
+					transaction.rollback();
+				e.printStackTrace();
+			} finally {
+				session.close();
+			}
 		}
 	}
 }

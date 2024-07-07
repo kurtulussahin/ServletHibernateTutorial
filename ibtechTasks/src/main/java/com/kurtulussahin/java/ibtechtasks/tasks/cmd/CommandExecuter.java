@@ -1,9 +1,10 @@
-package com.kurtulussahin.java.ibtechtasks.task1.cmd;
+package com.kurtulussahin.java.ibtechtasks.tasks.cmd;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.dao.CommandDao;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Command;
 import java.lang.reflect.*;
+
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.CommandDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Command;
 
 public class CommandExecuter {
 	public static Bag execute(String commandString, Bag bag) throws Exception {
@@ -14,7 +15,7 @@ public class CommandExecuter {
 				throw new Exception("CommandString not found!");
 			}
 
-			Class<?> c = Class.forName("com.kurtulussahin.java.ibtechtasks.task1.operation." + command.getClassName());
+			Class<?> c = Class.forName("com.kurtulussahin.java.ibtechtasks.tasks.operation." + command.getClassName());
 			Object obj = c.getDeclaredConstructor().newInstance();
 			Method method;
 			Bag dbBag;

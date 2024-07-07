@@ -1,10 +1,10 @@
-package com.kurtulussahin.java.ibtechtasks.task1.operation;
+package com.kurtulussahin.java.ibtechtasks.tasks.operation;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.dao.CustomerDao;
-import com.kurtulussahin.java.ibtechtasks.task1.dao.PhoneDao;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Customer;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Phone;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.CustomerDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.PhoneDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Phone;
 
 public class PhoneOperation implements CrudOperations {
 

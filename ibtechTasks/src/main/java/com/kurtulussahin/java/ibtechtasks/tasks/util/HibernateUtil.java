@@ -1,4 +1,4 @@
-package com.kurtulussahin.java.ibtechtasks.task1.util;
+package com.kurtulussahin.java.ibtechtasks.tasks.util;
 
 import java.util.Properties;
 
@@ -8,11 +8,12 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import com.kurtulussahin.java.ibtechtasks.task1.model.Account;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Addres;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Command;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Customer;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Phone;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Account;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Addres;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.BatchData;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Command;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Phone;
 
 public class HibernateUtil {
 	
@@ -44,6 +45,7 @@ public class HibernateUtil {
 				configuration.addAnnotatedClass(Addres.class);
 				configuration.addAnnotatedClass(Customer.class);
 				configuration.addAnnotatedClass(Command.class);
+				configuration.addAnnotatedClass(BatchData.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();

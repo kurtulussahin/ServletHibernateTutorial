@@ -13,8 +13,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.bag.BagKey;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
 import com.kurtulussahin.java.ibtechtasks.xmlhelper.XMLParse;
 
 /**

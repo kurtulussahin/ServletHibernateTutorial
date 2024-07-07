@@ -1,4 +1,4 @@
-package com.kurtulussahin.java.ibtechtasks.task1.model;
+package com.kurtulussahin.java.ibtechtasks.tasks.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

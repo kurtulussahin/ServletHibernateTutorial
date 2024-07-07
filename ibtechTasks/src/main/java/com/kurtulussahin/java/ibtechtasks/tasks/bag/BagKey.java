@@ -1,4 +1,4 @@
-package com.kurtulussahin.java.ibtechtasks.task1.bag;
+package com.kurtulussahin.java.ibtechtasks.tasks.bag;
 
 public enum BagKey {
 	ID,

@@ -1,4 +1,4 @@
-package com.kurtulussahin.java.ibtechtasks.task1.model;
+package com.kurtulussahin.java.ibtechtasks.tasks.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ public class Account {
 	private String accountName;
 	
 	@Column(name="balance") 
-	private long balance;
+	private double balance;
 	
 	@Column(name="status") 
 	private int status;
@@ -36,6 +36,14 @@ public class Account {
 		this.customerId = customerId;
 		this.accountName = accountName;
 		this.balance = 0;
+		this.status=1;
+	}
+
+	public Account(String accountName, double balance) {
+		super();
+		this.customerId=100L;
+		this.accountName = accountName;
+		this.balance = balance;
 		this.status=1;
 	}
 
@@ -63,11 +71,11 @@ public class Account {
 		this.accountName = accountName;
 	}
 
-	public long getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(long balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 

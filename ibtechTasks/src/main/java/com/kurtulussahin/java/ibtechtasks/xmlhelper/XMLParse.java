@@ -19,10 +19,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.bag.BagKey;
-import com.kurtulussahin.java.ibtechtasks.task1.cmd.CommandExecuter;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
+import com.kurtulussahin.java.ibtechtasks.tasks.cmd.CommandExecuter;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
 
 
 public class XMLParse {

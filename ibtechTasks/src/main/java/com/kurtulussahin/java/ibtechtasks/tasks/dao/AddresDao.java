@@ -1,22 +1,24 @@
-package com.kurtulussahin.java.ibtechtasks.task1.dao;
+package com.kurtulussahin.java.ibtechtasks.tasks.dao;
 
 import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.Column;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.kurtulussahin.java.ibtechtasks.task1.model.Phone;
-import com.kurtulussahin.java.ibtechtasks.task1.util.HibernateUtil;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Addres;
+import com.kurtulussahin.java.ibtechtasks.tasks.util.HibernateUtil;
 
-public class PhoneDao {
-	public void create(Phone phone) {
+public class AddresDao {
+	public void create(Addres addres) {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			session.save(phone);
+			session.save(addres);
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {
@@ -26,23 +28,24 @@ public class PhoneDao {
 		}
 	}
 
-	public List<Phone> getPhones() {
+	public List<Addres> getAddresses() {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			return session.createQuery("from Phone", Phone.class).list();
+			return session.createQuery("from Addres", Addres.class).list();
 		}
 	}
 	
-	public void list() {
+	public void listAddresses() {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				List customers = session.createQuery("FROM Phone").list();
-				for (Iterator iterator = customers.iterator(); iterator.hasNext();) {
-					Phone phone = (Phone) iterator.next();
-					System.out.print("Id: " + phone.getId());
-					System.out.print(" Country Code: " + phone.getCountryCode());
-					System.out.println(" Number: " + phone.getNumber());
+				List addresses = session.createQuery("FROM Addres").list();
+				for (Iterator iterator = addresses.iterator(); iterator.hasNext();) {
+					Addres addres = (Addres) iterator.next();
+					System.out.print("Id: " + addres.getId());
+					System.out.print(" Customer Id: " + addres.getCustomerId());
+					System.out.print(" City: " + addres.getCity());
+					System.out.println(" Country: " + addres.getCountry());
 				}
 				transaction.commit();
 			} catch (HibernateException e) {
@@ -59,18 +62,17 @@ public class PhoneDao {
 			e.printStackTrace();
 		}
 	}
-	
 	   
-	public void update(long phoneId, String countryCode, String number) {
-
+	public void update(long addresId, String country, String city, String postalCode) {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				Phone phone = (Phone) session.get(Phone.class, phoneId);
-				phone.setCountryCode(countryCode);
-				phone.setNumber(number);
-				session.update(phone);
+				Addres addres = (Addres) session.get(Addres.class, addresId);
+				addres.setCity(city);
+				addres.setCountry(country);
+				addres.setPostalCode(postalCode);
+				session.update(addres);
 				transaction.commit();
 			} catch (HibernateException e) {
 				if (transaction != null)
@@ -80,17 +82,16 @@ public class PhoneDao {
 				session.close();
 			}
 		}
-
 	}
 	   
-	public void delete(long phoneId) {
+	public void delete(long addresId) {
 
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			try {
 				transaction = session.beginTransaction();
-				Phone employee = (Phone) session.get(Phone.class, phoneId);
-				session.delete(employee);
+				Addres addres = (Addres) session.get(Addres.class, addresId);
+				session.delete(addres);
 				transaction.commit();
 			} catch (HibernateException e) {
 				if (transaction != null)

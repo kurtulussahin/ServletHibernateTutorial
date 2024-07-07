@@ -1,11 +1,11 @@
-package com.kurtulussahin.java.ibtechtasks.task1.operation;
+package com.kurtulussahin.java.ibtechtasks.tasks.operation;
 
 import java.util.List;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.bag.BagKey;
-import com.kurtulussahin.java.ibtechtasks.task1.dao.CustomerDao;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.CustomerDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
 
 public class CustomerOperation implements CrudOperations {
 

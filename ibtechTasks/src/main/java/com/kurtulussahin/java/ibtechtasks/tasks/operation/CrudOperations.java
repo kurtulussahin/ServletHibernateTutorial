@@ -1,5 +1,5 @@
-package com.kurtulussahin.java.ibtechtasks.task1.operation;
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
+package com.kurtulussahin.java.ibtechtasks.tasks.operation;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
 
 public interface CrudOperations {
 	

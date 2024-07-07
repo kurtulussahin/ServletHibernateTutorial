@@ -1,13 +1,13 @@
-package com.kurtulussahin.java.ibtechtasks.task1.dao;
+package com.kurtulussahin.java.ibtechtasks.tasks.dao;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.kurtulussahin.java.ibtechtasks.task1.cmd.CommandExecuter;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Command;
-import com.kurtulussahin.java.ibtechtasks.task1.util.HibernateUtil;
+import com.kurtulussahin.java.ibtechtasks.tasks.cmd.CommandExecuter;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Command;
+import com.kurtulussahin.java.ibtechtasks.tasks.util.HibernateUtil;
 
 public class CommandDao {
 

@@ -1,12 +1,22 @@
-package com.kurtulussahin.java.ibtechtasks.task1;
+package com.kurtulussahin.java.ibtechtasks.tasks;
 
+import java.text.*;
+
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
-import com.kurtulussahin.java.ibtechtasks.task1.bag.Bag;
-import com.kurtulussahin.java.ibtechtasks.task1.bag.BagKey;
-import com.kurtulussahin.java.ibtechtasks.task1.cmd.CommandExecuter;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Account;
-import com.kurtulussahin.java.ibtechtasks.task1.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
+import com.kurtulussahin.java.ibtechtasks.tasks.cmd.CommandExecuter;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.AccountDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.dao.BatchDataDao;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Account;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.BatchData;
+import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
+import com.kurtulussahin.java.ibtechtasks.tasks.operation.Operation;
 
 public class MainReflection {
 	
@@ -15,9 +25,24 @@ public class MainReflection {
 		deleteAllRows();
 		CutomerCreateTest();
 		AccountCreateTest();
+		
+		AccountDao accountDao = new AccountDao();
+		BatchDataDao batchDataDao = new BatchDataDao();
 
-
+		for (int i = 0; i < 1; i++) {
+			Account account = new Account("Vadesiz" + i, i * 1000);
+			accountDao.create(account);
+			System.out.println(account);
+			for (int j = 0; j < 1; j++) {
+				BatchData batchData = new BatchData(false, account.getId(), j * 111, j % 2 == 0 ? 'A' : 'B');
+				batchDataDao.create(batchData);
+			}
+		}
+		
+		execute(2);
 	}
+
+	
 
 
 	
@@ -92,6 +117,29 @@ public class MainReflection {
 			System.out.print(" Name: " + customerItem.getName());
 			System.out.println(" Surname: " + customerItem.getSurname());
 		}	
+	}
+	
+	
+	public static void execute(int threadcount) {
+
+		BatchDataDao batchDataDao = new BatchDataDao();
+		List<BatchData> batchDatas = batchDataDao.getList();
+		
+		System.out.println("-->> batchDatas Size: " + batchDatas.size());
+		System.out.println("-->> batchDatas To Be Processed" + batchDatas.stream().filter(x -> !(x.isStatus())).collect(Collectors.toList()).size());
+
+		int commitCount = batchDatas.size() / threadcount;
+		DateFormat dateformat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
+		ExecutorService executor = Executors.newFixedThreadPool(threadcount);
+		for (int i = 0; i < threadcount; i++) {
+			Runnable worker = new Operation(i * commitCount, (i + 1) * commitCount, batchDatas);
+			executor.execute(worker);
+			System.out.println(i + " thread baþladý. " + dateformat.format(new Date(System.currentTimeMillis())));
+		}
+		executor.shutdown();
+		while (!executor.isTerminated()) {
+		}
+		System.out.println("SON");
 	}
 
 }
