@@ -17,7 +17,7 @@ public class BatchData {
 	private long siraNo;
 	
 	@Column(name="status") 
-	private boolean status; // 0 kay�t i�lenecek, 1 i�lendi
+	private boolean status; // 0 kayıt islenecek, 1 islendi
 	
 	@Column(name="account_no") 
 	private long accountNo;

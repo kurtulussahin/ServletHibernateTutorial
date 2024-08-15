@@ -29,12 +29,16 @@ public class MainReflection {
 		AccountDao accountDao = new AccountDao();
 		BatchDataDao batchDataDao = new BatchDataDao();
 
-		for (int i = 0; i < 1; i++) {
-			Account account = new Account("Vadesiz" + i, i * 1000);
+		for (int i = 0; i < 10; i++) {
+			Account account = new Account("Vadesiz" + i, i *10);
 			accountDao.create(account);
 			System.out.println(account);
-			for (int j = 0; j < 1; j++) {
-				BatchData batchData = new BatchData(false, account.getId(), j * 111, j % 2 == 0 ? 'A' : 'B');
+			for (int j = 0; j < 10; j++) {
+				char transactionType='A';
+				if(j%2==0) {
+					transactionType='B';
+				}
+				BatchData batchData = new BatchData(false, account.getId(), j * 111, transactionType);
 				batchDataDao.create(batchData);
 			}
 		}
@@ -50,6 +54,7 @@ public class MainReflection {
 		Bag emptyBag = new Bag();
 		CommandExecuter.execute("delete_all_customers", emptyBag);
 		CommandExecuter.execute("delete_all_accounts", emptyBag);
+		CommandExecuter.execute("delete_all_batchdata", emptyBag);
 	}
 	public static long AccountCreateTest() throws Exception {
 		Account account; 
@@ -131,10 +136,12 @@ public class MainReflection {
 		int commitCount = batchDatas.size() / threadcount;
 		DateFormat dateformat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
 		ExecutorService executor = Executors.newFixedThreadPool(threadcount);
+		System.out.println("-->> threadcount: " + threadcount);
+
 		for (int i = 0; i < threadcount; i++) {
 			Runnable worker = new Operation(i * commitCount, (i + 1) * commitCount, batchDatas);
 			executor.execute(worker);
-			System.out.println(i + " thread baþladý. " + dateformat.format(new Date(System.currentTimeMillis())));
+			System.out.println(i + " thread basladı. " + dateformat.format(new Date(System.currentTimeMillis())));
 		}
 		executor.shutdown();
 		while (!executor.isTerminated()) {

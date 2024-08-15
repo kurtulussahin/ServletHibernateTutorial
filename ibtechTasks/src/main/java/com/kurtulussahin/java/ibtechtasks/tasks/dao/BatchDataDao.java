@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.kurtulussahin.java.ibtechtasks.tasks.model.BatchData;
 import com.kurtulussahin.java.ibtechtasks.tasks.util.HibernateUtil;
@@ -49,5 +50,31 @@ public class BatchDataDao {
 				session.close();
 			}
 		}
+	}
+
+	public static void deleteAll() {
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			try {
+				transaction = session.beginTransaction();
+				String stringQuery = "DELETE FROM BatchData";
+				Query query = session.createQuery(stringQuery);
+				query.executeUpdate();
+				transaction.commit();
+				System.out.println("-> Deletion successful");
+			} catch (HibernateException e) {
+				if (transaction != null)
+					transaction.rollback();
+				e.printStackTrace();
+			} finally {
+				session.close();
+			}
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+		
 	}
 }

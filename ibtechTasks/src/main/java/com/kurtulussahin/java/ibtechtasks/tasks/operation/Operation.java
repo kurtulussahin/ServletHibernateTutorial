@@ -37,7 +37,7 @@ public class Operation implements Runnable {
 			}
 			batchDataDao.updateStatus(batchData.getSiraNo(), true);
 
-			System.out.println("--> " + i + ". batch data ger�ekle�tirildi -->> " + Thread.currentThread().getName());
+			System.out.println("--> " + i + ". batch data gerceklestirildi -->> " + Thread.currentThread().getName());
 		}
 	}
 }
