@@ -33,7 +33,7 @@ public class MainReflection {
 			Account account = new Account("Vadesiz" + i, i *10);
 			accountDao.create(account);
 			System.out.println(account);
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 2; j++) {
 				char transactionType='A';
 				if(j%2==0) {
 					transactionType='B';
@@ -43,7 +43,7 @@ public class MainReflection {
 			}
 		}
 		
-		execute(2);
+		execute(2,2);
 	}
 
 	
@@ -125,15 +125,15 @@ public class MainReflection {
 	}
 	
 	
-	public static void execute(int threadcount) {
+	public static void execute(int threadcount, int commitCount) {
 
 		BatchDataDao batchDataDao = new BatchDataDao();
 		List<BatchData> batchDatas = batchDataDao.getList();
-		
 		System.out.println("-->> batchDatas Size: " + batchDatas.size());
-		System.out.println("-->> batchDatas To Be Processed" + batchDatas.stream().filter(x -> !(x.isStatus())).collect(Collectors.toList()).size());
+		System.out.println("-->> unprocessedBatchDataCount: " + countUnProcessedBatchData(batchDatas));
 
-		int commitCount = batchDatas.size() / threadcount;
+		
+		//int commitCount = batchDatas.size() / threadcount;
 		DateFormat dateformat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
 		ExecutorService executor = Executors.newFixedThreadPool(threadcount);
 		System.out.println("-->> threadcount: " + threadcount);
@@ -143,10 +143,32 @@ public class MainReflection {
 			executor.execute(worker);
 			System.out.println(i + " thread basladı. " + dateformat.format(new Date(System.currentTimeMillis())));
 		}
+
+		
 		executor.shutdown();
 		while (!executor.isTerminated()) {
 		}
+		batchDatas = batchDataDao.getList();
+		System.out.println("-->> unprocessedBatchDataCount: " + countUnProcessedBatchData(batchDatas));
+		int numberOfUnprocessedBatchData = countUnProcessedBatchData(batchDatas);
+		if(numberOfUnprocessedBatchData>0) {
+			execute(2,2);
+		}
 		System.out.println("SON");
+	}
+
+
+
+
+
+	private static int countUnProcessedBatchData(List<BatchData> batchDatas) {
+		int unprocessedBatchDataCount = 0;
+		for(int i=0; i<batchDatas.size(); i++) {
+		 if (!batchDatas.get(i).isStatus()) {
+			 unprocessedBatchDataCount++;
+		 	}
+		 }
+		return unprocessedBatchDataCount;
 	}
 
 }
