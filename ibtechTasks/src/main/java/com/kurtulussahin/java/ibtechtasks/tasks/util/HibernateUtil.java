@@ -32,7 +32,7 @@ public class HibernateUtil {
 				settings.put(Environment.PASS, "123456");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
 
-				settings.put(Environment.SHOW_SQL, "true");
+				//settings.put(Environment.SHOW_SQL, "true");
 
 				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 

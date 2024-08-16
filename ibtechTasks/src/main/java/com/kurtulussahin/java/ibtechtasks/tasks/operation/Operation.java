@@ -29,6 +29,7 @@ public class Operation implements Runnable {
 		for (int i = startNumber; i < endNumber; i++) {
 			BatchData batchData = batchDatas.get(i);
 			Account account = accountDao.getAccount(batchData.getAccountNo());
+			double oldBalance=account.getBalance();
 
 			if (batchData.getTransactionType() == 'A') {
 				accountDao.updateBalance(account.getId(), account.getBalance() + batchData.getAmount());
@@ -36,8 +37,14 @@ public class Operation implements Runnable {
 				accountDao.updateBalance(account.getId(), account.getBalance() - batchData.getAmount());
 			}
 			batchDataDao.updateStatus(batchData.getSiraNo(), true);
-
-			System.out.println("--> " + i + ". batch data gerceklestirildi -->> " + Thread.currentThread().getName());
+			account = accountDao.getAccount(batchData.getAccountNo());
+			printOperationInfo(i,batchData.getTransactionType(), account.getId(),batchData.getAmount(),oldBalance,account.getBalance()  );
 		}
+	}
+	
+	private void printOperationInfo(int batchDataId, char TransactionType, long accountId,double amount, double oldBalance, double newBalance) {
+		System.out.println("--> " + batchDataId + ". batch data gerceklestirildi -->> " + Thread.currentThread().getName());
+		System.out.println("--> " + "TransactionType: "+TransactionType + ", amount: "+amount+", accountId: "+accountId+", oldBalance: "+oldBalance+", newBalance: "+newBalance);
+
 	}
 }
