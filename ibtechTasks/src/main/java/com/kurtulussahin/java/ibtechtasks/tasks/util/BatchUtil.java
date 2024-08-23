@@ -16,7 +16,9 @@ public class BatchUtil {
 
 		List<BatchData> batchDatas = getBatchData();
 		printBatchInfo(batchDatas);
+		
 		int numberOfUnprocessedData= calculateNumberOfUnprocessedBatchData();
+		
 		while (numberOfUnprocessedData > 0) { // işlenemeyen data olursa sonsuza girecek
 			execute(threadcount, commitCount, batchDatas);
 			numberOfUnprocessedData= calculateNumberOfUnprocessedBatchData();

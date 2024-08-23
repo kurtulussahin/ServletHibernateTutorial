@@ -28,14 +28,12 @@ public class Demo extends HttpServlet {
      */
     public Demo() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -45,27 +43,32 @@ public class Demo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		XMLParse xmlParse = new XMLParse();
 		try {
-//			Bag bag = xmlParse.XMLParseFileAndCommandRun("customer");
-			Bag bag = xmlParse.XMLParseAndCommandRun(request.getReader().lines().collect(Collectors.joining()));
-			PrintWriter writer = response.getWriter();
-			writer.append("<EXT>");
-			//writer.append("<id>" + bag.getValue(BagKey.ID).toString() + "</id>");
-			writer.append("<name>" + bag.getValue(BagKey.NAME).toString() + "</name>");
-			writer.append("<surname>" + bag.getValue(BagKey.SURNAME).toString() + "</surname>");
-			writer.append("</EXT>");
+			
+			String body = convertHttpServletRequestToStringBody(request);
+			Bag bag = xmlParse.XMLParseAndCommandRun(body);
+			writeResponse(response, bag);
+			
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//doGet(request, response);
-		//doGet(request, response);
+
+	}
+
+	private void writeResponse(HttpServletResponse response, Bag bag) throws IOException {
+		PrintWriter writer = response.getWriter();
+		writer.append("<EXT>");
+		writer.append("<name>" + bag.getValue(BagKey.NAME).toString() + "</name>");
+		writer.append("<surname>" + bag.getValue(BagKey.SURNAME).toString() + "</surname>");
+		writer.append("</EXT>");
+	}
+
+	private String convertHttpServletRequestToStringBody(HttpServletRequest request) throws IOException {
+		String body=request.getReader().lines().collect(Collectors.joining());
+		return body;
 	}
 
 }

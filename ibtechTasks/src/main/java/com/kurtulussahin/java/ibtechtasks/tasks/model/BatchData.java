@@ -17,7 +17,7 @@ public class BatchData {
 	private long siraNo;
 	
 	@Column(name="status") 
-	private boolean status; // 0 kayıt islenecek, 1 islendi
+	private boolean status;
 	
 	@Column(name="account_no") 
 	private long accountNo;
@@ -26,7 +26,7 @@ public class BatchData {
 	private double amount;
 	
 	@Column(name="transaction_type") 
-	private char transactionType; // A alacak, B bor�
+	private char transactionType;
 
 	public BatchData(boolean status, long accountNo, double amount, char transactionType) {
 		super();

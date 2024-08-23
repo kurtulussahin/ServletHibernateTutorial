@@ -3,6 +3,7 @@ package com.kurtulussahin.java.ibtechtasks.tasks.operation;
 import java.util.List;
 
 import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagFactory;
 import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
 import com.kurtulussahin.java.ibtechtasks.tasks.dao.CustomerDao;
 import com.kurtulussahin.java.ibtechtasks.tasks.model.Customer;
@@ -23,7 +24,7 @@ public class CustomerOperation implements CrudOperations {
 		Customer customer = new Customer(name, surname);
 		Customer createdCustomer = customerDao.create(customer);
 		
-		Bag createdCustomerBag = new Bag();
+		Bag createdCustomerBag = BagFactory.createBag();
 		createdCustomerBag.put(BagKey.ID, createdCustomer.getId());
 		createdCustomerBag.put(BagKey.NAME, createdCustomer.getName());
 		createdCustomerBag.put(BagKey.SURNAME, createdCustomer.getSurname());
@@ -40,7 +41,7 @@ public class CustomerOperation implements CrudOperations {
 		String surname = (String) bag.getValue(BagKey.SURNAME);			
 		
 		Customer customer = customerDao.update(id, name, surname);
-		Bag updatedCustomerBag = new Bag();
+		Bag updatedCustomerBag = BagFactory.createBag();
 		updatedCustomerBag.put(BagKey.ID, customer.getId());
 		updatedCustomerBag.put(BagKey.NAME, customer.getName());
 		updatedCustomerBag.put(BagKey.SURNAME, customer.getSurname());
@@ -51,7 +52,7 @@ public class CustomerOperation implements CrudOperations {
 	@Override
 	public Bag list() {
 		List<Customer> customers = customerDao.getCustomers();
-		Bag bag = new Bag();
+		Bag bag = BagFactory.createBag();
 		bag.put(BagKey.CUSTOMERLIST, customers);
 		return bag;
 	}
@@ -61,7 +62,7 @@ public class CustomerOperation implements CrudOperations {
 		long id = (long) bag.getValue(BagKey.ID);
 		customerDao.delete(id);
 		
-		Bag deletedCustomerBag = new Bag();
+		Bag deletedCustomerBag = BagFactory.createBag();
 		deletedCustomerBag.put(BagKey.ID, id);
 		deletedCustomerBag.put(BagKey.ISSUCCESSFULL, true);
 		deletedCustomerBag.put(BagKey.MESSAGE, "Success");

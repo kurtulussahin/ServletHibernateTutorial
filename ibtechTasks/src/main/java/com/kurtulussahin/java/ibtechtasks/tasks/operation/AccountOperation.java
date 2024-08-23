@@ -1,6 +1,7 @@
 package com.kurtulussahin.java.ibtechtasks.tasks.operation;
 
 import com.kurtulussahin.java.ibtechtasks.tasks.bag.Bag;
+import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagFactory;
 import com.kurtulussahin.java.ibtechtasks.tasks.bag.BagKey;
 import com.kurtulussahin.java.ibtechtasks.tasks.dao.AccountDao;
 import com.kurtulussahin.java.ibtechtasks.tasks.model.Account;
@@ -20,7 +21,7 @@ public class AccountOperation implements CrudOperations {
 		Account account = new Account(customerId, accountName);
 		Account createdAccount = accountDao.create(account);
 		
-		Bag createdAccountBag = new Bag();
+		Bag createdAccountBag = BagFactory.createBag();
 		createdAccountBag.put(BagKey.ID, createdAccount.getId());
 		createdAccountBag.put(BagKey.CUSTOMERID, createdAccount.getCustomerId());
 		createdAccountBag.put(BagKey.ACCOUNTNAME, createdAccount.getAccountName());
