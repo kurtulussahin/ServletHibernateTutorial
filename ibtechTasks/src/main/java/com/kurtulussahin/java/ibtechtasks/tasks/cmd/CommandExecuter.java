@@ -13,10 +13,19 @@ public class CommandExecuter {
 		Class<?> c = Class.forName("com.kurtulussahin.java.ibtechtasks.tasks.operation." + command.getClassName());
 		Object obj = c.getDeclaredConstructor().newInstance();
 		Method method = getDeclaredMethod(bag, command, c);
-		 
-		Bag dbBag = (Bag) method.invoke(obj, bag);
-		
+		Bag dbBag = invokeMethot(bag, obj, method);
+
 		return dbBag;
+	}
+
+	private static Bag invokeMethot(Bag bag, Object obj, Method method)
+			throws IllegalAccessException, InvocationTargetException {
+		if (!bag.getMap().isEmpty()) {
+			return (Bag) method.invoke(obj, bag);
+		} else {
+			return (Bag) method.invoke(obj);
+		}
+
 	}
 
 	private static Method getDeclaredMethod(Bag bag, Command command, Class<?> c) throws NoSuchMethodException {
@@ -42,9 +51,9 @@ public class CommandExecuter {
 	}
 
 	private static void printCommantInfo(Command command) {
-		
-			System.out.println("-> Command Information: " + "Name: " + command.getCommandName() + ", Class: "
-					+ command.getClassName() + ", Method: " + command.getMethodName());
+
+		System.out.println("-> Command Information: " + "Name: " + command.getCommandName() + ", Class: "
+				+ command.getClassName() + ", Method: " + command.getMethodName());
 	}
 
 	private static class CommandStringNotFound extends RuntimeException {
