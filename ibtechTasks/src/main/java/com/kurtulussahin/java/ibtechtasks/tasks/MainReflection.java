@@ -29,7 +29,9 @@ public class MainReflection {
 		//TestDataUtil.AccountCreateTest();
 		TestDataUtil.createAccountsAndBatchData();
 		
-		BatchUtil.startBatchProcess(2,2);
+		int threadCount = 2;
+		int commitCount = 2; 
+		BatchUtil.startBatchProcess(threadCount,commitCount);
 	}
 
 
