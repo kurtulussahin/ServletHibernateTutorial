@@ -48,5 +48,6 @@
 	<classpathentry kind="lib" path="lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/acer/İndirilenler/jakarta.servlet-api-5.0.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
